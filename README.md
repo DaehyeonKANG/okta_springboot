@@ -11,3 +11,4 @@ Please find the sample that fits your use-case from the table below.
 | [Resource Server](/resource-server) | This is a sample API resource server that shows you how to authenticate requests with access tokens that have been issued by Okta. | Single-Page applications. |
 | [Front End](/front-end) (bonus) | A simple static Single-Page application that can be used with the resource-server | Test the above resource server |
 # okta_springboot
+# okta_springboot
