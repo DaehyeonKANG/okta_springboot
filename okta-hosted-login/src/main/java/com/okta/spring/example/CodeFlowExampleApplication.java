@@ -60,6 +60,7 @@ public class CodeFlowExampleApplication {
         @PreAuthorize("hasAuthority('SCOPE_profile')")
         public String home(Model model, OAuth2AuthenticationToken authentication) {
             model.addAttribute("informations", authentication);
+            System.out.println("sample");
             return "home";
         }
 
