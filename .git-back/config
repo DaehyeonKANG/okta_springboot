@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "springboot-okta-poc-2302"]
+	url = https://github.com/DaehyeonKANG/okta_springboot.git
+	fetch = +refs/heads/*:refs/remotes/springboot-okta-poc-2302/*
