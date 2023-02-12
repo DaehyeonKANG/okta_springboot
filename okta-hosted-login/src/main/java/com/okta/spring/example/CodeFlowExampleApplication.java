@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
 import org.springframework.ui.Model;
 
 
@@ -71,8 +68,11 @@ public class CodeFlowExampleApplication {
 
         @GetMapping("/signup")
         @PreAuthorize("hasAuthority('SCOPE_profile')")
-        public ModelAndView userSignup(OAuth2AuthenticationToken authentication) {
-            return new ModelAndView("userSignup" , Collections.singletonMap("details", authentication.getPrincipal().getAttributes()));
+        public String signup(Model model, OAuth2AuthenticationToken authentication) {
+            CompanyInfoList companies = new CompanyInfoList();
+            model.addAttribute("informations", authentication);
+            model.addAttribute("companies", companies.companies);
+            return "userSignup";
         }
     }
 }

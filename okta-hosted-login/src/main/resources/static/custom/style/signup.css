@@ -4,7 +4,15 @@
     background-size: cover
 }
 
-.red-highlight {
+.circle-select {
+    border-radius: 10rem;
+    height: 3rem;
+    font-size: .8rem;
+    color: #6E707E;
+}
+
+
+/* .red-highlight {
     font-weight: bold;
     color: red;
-}
+} */
