@@ -62,9 +62,16 @@ public class CodeFlowExampleApplication {
 
         @GetMapping("/profile")
         @PreAuthorize("hasAuthority('SCOPE_profile')")
-        public ModelAndView userDetails(OAuth2AuthenticationToken authentication) {
-            return new ModelAndView("userProfile" , Collections.singletonMap("details", authentication.getPrincipal().getAttributes()));
+        public String userDetails(Model model, OAuth2AuthenticationToken authentication) {
+            model.addAttribute("informations", authentication);
+            return "profile";
         }
+
+        // @GetMapping("/profile")
+        // @PreAuthorize("hasAuthority('SCOPE_profile')")
+        // public ModelAndView userDetails(OAuth2AuthenticationToken authentication) {
+        //     return new ModelAndView("userProfile" , Collections.singletonMap("details", authentication.getPrincipal().getAttributes()));
+        // }
 
         @GetMapping("/signup")
         @PreAuthorize("hasAuthority('SCOPE_profile')")

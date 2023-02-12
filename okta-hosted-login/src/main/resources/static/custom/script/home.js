@@ -3,7 +3,7 @@ function checkObject(data) {
         let userProfileAttributes = data.principal.attributes;
 
         let agreeChannelB = userProfileAttributes.channel_B_tcAgreedAt;
-        let agreeState = (agreeChannelB == null || agreeChannelB == undefined) ? false : true;
+        let agreeState = (agreeChannelB == null || agreeChannelB == undefined || agreeChannelB == "") ? false : true;
         if (agreeState) {
             location.href = "/profile";
         } else {

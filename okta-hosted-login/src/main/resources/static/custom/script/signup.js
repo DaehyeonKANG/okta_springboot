@@ -73,5 +73,5 @@ function checkDataConfig() {
         return false;
     }
 
-    return false;
+    return true;
 }
