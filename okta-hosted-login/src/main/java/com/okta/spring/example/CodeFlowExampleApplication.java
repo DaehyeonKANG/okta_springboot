@@ -81,5 +81,10 @@ public class CodeFlowExampleApplication {
             model.addAttribute("companies", companies.companies);
             return "userSignup";
         }
+
+        @GetMapping("/completeuserprofile")
+        public String completeuserprofile(Model model, OAuth2AuthenticationToken authentication) {
+            return "userSignout";
+        }
     }
 }

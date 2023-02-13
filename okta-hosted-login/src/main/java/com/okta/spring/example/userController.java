@@ -28,7 +28,7 @@ public class UserController {
 
         JSONObject response = this.userService.updateUserProfile(userEntity);
 
-        return "redirect:/profile";
+        return "redirect:/completeuserprofile";
     }
 
     // @PostMapping("/updateuserprofile")

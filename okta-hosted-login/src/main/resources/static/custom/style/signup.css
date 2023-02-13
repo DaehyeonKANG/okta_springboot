@@ -1,7 +1,8 @@
 .bg-login-image {
     background: url(/custom/icons/samsung_lettermark/300_186_1.png.avif);
     background-position: center;
-    background-size: cover
+    background-size: auto;
+    background-repeat: no-repeat;
 }
 
 .circle-select {

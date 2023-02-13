@@ -1,3 +1,15 @@
+function checkAgreed(data) {
+    let userProfileAttributes = data.principal.attributes;
+    let agreedAtChannelB = userProfileAttributes.channel_B_tcAgreedAt;
+
+    if (agreedAtChannelB != null && agreedAtChannelB != undefined && agreedAtChannelB != "") {
+        location.href = "/profile";
+        return false;
+    }
+
+    return;
+}
+
 function setUserInfo(data) {
     if (data != null) {
         let userProfileAttributes = data.principal.attributes;
