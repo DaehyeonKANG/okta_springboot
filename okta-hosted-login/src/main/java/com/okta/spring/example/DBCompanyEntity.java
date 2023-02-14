@@ -1,7 +1,7 @@
 package com.okta.spring.example;
 
 // import javax.persistence.*;
-// import lombok.*;
+import lombok.*;
 
 // @Entity
 // @Table(name = "PARTNER_COMPANIES")
@@ -9,7 +9,11 @@ package com.okta.spring.example;
 // @Builder
 // @AllArgsConstructor
 // @NoArgsConstructor
+@Getter
+@Setter
 public class DBCompanyEntity {
+    private String data;
+    private String date2;
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // @Column(name = "COMPANY_IDX")

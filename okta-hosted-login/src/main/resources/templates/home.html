@@ -11,7 +11,7 @@
     <title>Channel-B Sign In</title>
 
     <meta id="_csrf" th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
-    <!-- <meta name="_csrf_header" th:content="${_csrf.headerName}"/> -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <link href="/custom/icons/samsung_lettermark/samsung_ci.png" rel="icon" type="image/x-icon" />
 
@@ -31,12 +31,35 @@
             let data = /*[[${informations}]]*/ null;
             checkObject(data);
 
-            // var token = $("meta[name='_csrf']").attr("content");
-		    // var header = $("meta[name='_csrf_header']").attr("content");
+            var token = $("meta[name='_csrf']").attr("content");
+		    var header = $("meta[name='_csrf_header']").attr("content");
             // console.log(header);
             // console.log(token);
             console.log($("meta#_csrf").attr("name"));
             console.log($("meta#_csrf").attr("content"));
+
+            let headerName = $("meta#_csrf").attr("name");
+            let headerValue = $("meta#_csrf").attr("content");
+
+            let payLoad = new Object();
+            payLoad.data = "a";
+            payLoad.date2 = "b";
+            $.ajax({
+                url: "/company/search",
+                type: "POST",
+                async: true,
+                data: JSON.stringify(payLoad),
+                dataType: "json",
+                contentType: "application/json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(headerName, headerValue);
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function(response) {
+                    console.log("success");
+                    console.log(response);
+                }
+            });
 
             // let payLoad = new Object();
             // payLoad.companyNameEn = data.principal.attributes.userCompanyInput;
