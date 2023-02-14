@@ -86,5 +86,10 @@ public class CodeFlowExampleApplication {
         public String completeuserprofile(Model model, OAuth2AuthenticationToken authentication) {
             return "userSignout";
         }
+
+        @GetMapping("/termsonchannelb")
+        public String termsonchannelb() {
+            return "termsonchannelb";
+        }
     }
 }

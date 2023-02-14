@@ -36,15 +36,23 @@ function optionSelect(userOption, elementId) {
 function checkPrivacyPolicy(data) {
     let userProfileAttributes = data.principal.attributes;
     let userRegionAttribute = userProfileAttributes.userCountryInput;
+    let ppObj = document.getElementById("agreePrivacyPolicy");
 
+    let ppAgreedState = (userProfileAttributes.ppAgreedAt == null || userProfileAttributes.ppAgreedAt == undefined || userProfileAttributes.ppAgreedAt == "") ? false : true;
     let userRegion = document.getElementById("userRegion");
     userRegion.addEventListener("change", function() {
-        if (userRegionAttribute == userRegion.value) {
-            document.getElementById("agreePrivacyPolicy").checked = true;
+        if (userRegionAttribute == userRegion.value && ppAgreedState) {
+            ppObj.checked = true;
         } else {
-            document.getElementById("agreePrivacyPolicy").checked = false;
+            ppObj.checked = false;
         }
     });
+
+    if (userRegionAttribute == userRegion.value && ppAgreedState) {
+        ppObj.checked = true;
+    } else {
+        ppObj.checked = false;
+    }
 }
 
 function setUserCompany(companies) {

@@ -41,6 +41,17 @@
                     location.href = "/updateuserprofile?email=" + document.getElementById("userEmail").value + "&country=" + document.getElementById("userRegion").value;
                 }
             });
+
+            let tcWindow = null;
+            document.getElementById("termsonchannelb").addEventListener("click", function() {
+                if (tcWindow == null) {
+                    tcWindow = window.open("/termsonchannelb", '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+                } else {
+                    tcWindow.focus();
+                }
+
+                console.log(tcWindow);
+            });
         });
     </script>
 </head>
@@ -85,13 +96,16 @@
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="agreeChannelB">
+                                                <!-- <label class="custom-control-label" for="agreeChannelB"><a id="termsonchannelb">Channel B 사용약관 동의</a></label> -->
+                                                <!-- <a id="termsonchannelb"><label class="custom-control-label" for="agreeChannelB">Channel B 사용약관 동의</label></a> -->
+                                                <!-- <a id="termsonchannelb"><label class="custom-control-label">Channel B 사용약관 동의</label></a> -->
                                                 <label class="custom-control-label" for="agreeChannelB">Channel B 사용약관 동의</label>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="agreePrivacyPolicy" checked>
+                                                <input type="checkbox" class="custom-control-input" id="agreePrivacyPolicy">
                                                 <label class="custom-control-label" for="agreePrivacyPolicy">개인정보 활용 동의</label>
                                             </div>
                                         </div>

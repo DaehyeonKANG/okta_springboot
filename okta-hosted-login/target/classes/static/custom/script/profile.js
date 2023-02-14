@@ -1,5 +1,10 @@
 function configureTitle(data) {
     let userProfileAttributes = data.principal.attributes;
+    if (userProfileAttributes.channel_B_tcAgreedAt == null || userProfileAttributes.channel_B_tcAgreedAt == undefined || userProfileAttributes.channel_B_tcAgreedAt == "") {
+        location.href = "/";
+        return false;
+    }
+
 
     let title = "환영합니다. " + userProfileAttributes.name + "님.";
     document.getElementById("userProfile-title").innerHTML = title;
@@ -66,111 +71,3 @@ function covertDateTime(value) {
 
     return date + " " + time;
 }
-
-// function configureUserBaseAttribute(data) {
-//     let userProfileAttributes = data.principal.attributes;
-
-//     let response = "";
-//     let index = 1;
-//     response = response.concat(configureUserProfileTableContents(index++, "login", userProfileAttributes.login));
-//     response = response.concat(configureUserProfileTableContents(index++, "firstName", userProfileAttributes.firstName));
-//     response = response.concat(configureUserProfileTableContents(index++, "lastName", userProfileAttributes.lastName));
-//     response = response.concat(configureUserProfileTableContents(index++, "middleName", userProfileAttributes.middleName));
-//     response = response.concat(configureUserProfileTableContents(index++, "honorificPrefix", userProfileAttributes.honorificPrefix));
-//     response = response.concat(configureUserProfileTableContents(index++, "honorificSuffix", userProfileAttributes.honorificSuffix));
-//     response = response.concat(configureUserProfileTableContents(index++, "email", userProfileAttributes.email));
-//     response = response.concat(configureUserProfileTableContents(index++, "title", userProfileAttributes.title));
-//     response = response.concat(configureUserProfileTableContents(index++, "displayName", userProfileAttributes.displayName));
-//     response = response.concat(configureUserProfileTableContents(index++, "nickName", userProfileAttributes.nickName));
-//     response = response.concat(configureUserProfileTableContents(index++, "profileUrl", userProfileAttributes.profileUrl));
-//     response = response.concat(configureUserProfileTableContents(index++, "secondEmail", userProfileAttributes.secondEmail));
-//     response = response.concat(configureUserProfileTableContents(index++, "mobilePhone", userProfileAttributes.mobilePhone));
-//     response = response.concat(configureUserProfileTableContents(index++, "primaryPhone", userProfileAttributes.primaryPhone));
-//     response = response.concat(configureUserProfileTableContents(index++, "streetAddress", userProfileAttributes.streetAddress));
-//     response = response.concat(configureUserProfileTableContents(index++, "city", userProfileAttributes.city));
-//     response = response.concat(configureUserProfileTableContents(index++, "state", userProfileAttributes.state));
-//     response = response.concat(configureUserProfileTableContents(index++, "zipCode", userProfileAttributes.zipCode));
-//     response = response.concat(configureUserProfileTableContents(index++, "countryCode", userProfileAttributes.countryCode));
-//     response = response.concat(configureUserProfileTableContents(index++, "postalAddress", userProfileAttributes.postalAddress));
-//     response = response.concat(configureUserProfileTableContents(index++, "preferredLanguage", userProfileAttributes.preferredLanguage));
-//     response = response.concat(configureUserProfileTableContents(index++, "locale", userProfileAttributes.locale));
-//     response = response.concat(configureUserProfileTableContents(index++, "timezone", userProfileAttributes.timezone));
-//     response = response.concat(configureUserProfileTableContents(index++, "userType", userProfileAttributes.userType));
-//     response = response.concat(configureUserProfileTableContents(index++, "employeeNumber", userProfileAttributes.employeeNumber));
-//     response = response.concat(configureUserProfileTableContents(index++, "costCenter", userProfileAttributes.costCenter));
-//     response = response.concat(configureUserProfileTableContents(index++, "organization", userProfileAttributes.organization));
-//     response = response.concat(configureUserProfileTableContents(index++, "division", userProfileAttributes.division));
-//     response = response.concat(configureUserProfileTableContents(index++, "department", userProfileAttributes.department));
-//     response = response.concat(configureUserProfileTableContents(index++, "managerId", userProfileAttributes.managerId));
-//     response = response.concat(configureUserProfileTableContents(index++, "manager", userProfileAttributes.manager));
-
-//     document.getElementById("userBaseAttributeTableBody").innerHTML = response;
-// }
-
-// function configureUserCustomAttribute(data) {
-//     let userProfileAttributes = data.principal.attributes;
-
-//     let response = "";
-//     let index = 1;
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_A_tcAgreedAt", userProfileAttributes.channel_A_tcAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_A_tcAgreedVer", userProfileAttributes.channel_A_tcAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_B_tcAgreedAt", userProfileAttributes.channel_B_tcAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_B_tcAgreedVer", userProfileAttributes.channel_B_tcAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "userCompanyInput", userProfileAttributes.userCompanyInput));
-//     response = response.concat(configureUserProfileTableContents(index++, "userCountryInput", userProfileAttributes.userCountryInput));
-//     response = response.concat(configureUserProfileTableContents(index++, "ppAgreedAt", userProfileAttributes.ppAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "maAgreedAt", userProfileAttributes.maAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "maAgreedVer", userProfileAttributes.maAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "ppAgreedVer", userProfileAttributes.ppAgreedVer));
-
-//     document.getElementById("userCustomAttributeTableBody").innerHTML = response;
-// }
-
-// function configureApplicationBaseAttribute(data) {
-//     let userProfileAttributes = data.principal.attributes;
-
-//     let response = "";
-//     let index = 1;
-//     response = response.concat(configureUserProfileTableContents(index++, "userName", userProfileAttributes.userName));
-//     response = response.concat(configureUserProfileTableContents(index++, "name", userProfileAttributes.name));
-//     response = response.concat(configureUserProfileTableContents(index++, "nickname", userProfileAttributes.nickname));
-//     response = response.concat(configureUserProfileTableContents(index++, "given_name", userProfileAttributes.given_name));
-//     response = response.concat(configureUserProfileTableContents(index++, "middle_name", userProfileAttributes.middle_name));
-//     response = response.concat(configureUserProfileTableContents(index++, "family_name", userProfileAttributes.family_name));
-//     response = response.concat(configureUserProfileTableContents(index++, "email", userProfileAttributes.email));
-//     response = response.concat(configureUserProfileTableContents(index++, "profile", userProfileAttributes.profile));
-//     response = response.concat(configureUserProfileTableContents(index++, "picture", userProfileAttributes.picture));
-//     response = response.concat(configureUserProfileTableContents(index++, "website", userProfileAttributes.website));
-//     response = response.concat(configureUserProfileTableContents(index++, "gender", userProfileAttributes.gender));
-//     response = response.concat(configureUserProfileTableContents(index++, "birthdate", userProfileAttributes.birthdate));
-//     response = response.concat(configureUserProfileTableContents(index++, "zoneinfo", userProfileAttributes.zoneinfo));
-//     response = response.concat(configureUserProfileTableContents(index++, "locale", userProfileAttributes.locale));
-//     response = response.concat(configureUserProfileTableContents(index++, "phone_number", userProfileAttributes.phone_number));
-//     response = response.concat(configureUserProfileTableContents(index++, "street_address", userProfileAttributes.street_address));
-//     response = response.concat(configureUserProfileTableContents(index++, "locality", userProfileAttributes.locality));
-//     response = response.concat(configureUserProfileTableContents(index++, "region", userProfileAttributes.region));
-//     response = response.concat(configureUserProfileTableContents(index++, "postal_code", userProfileAttributes.postal_code));
-//     response = response.concat(configureUserProfileTableContents(index++, "country", userProfileAttributes.country));
-//     response = response.concat(configureUserProfileTableContents(index++, "formatted", userProfileAttributes.formatted));
-
-//     document.getElementById("applicationBaseAttributeTableBody").innerHTML = response;
-// }
-
-// function configureApplicationCustomAttribute(data) {
-//     let userProfileAttributes = data.principal.attributes;
-
-//     let response = "";
-//     let index = 1;
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_A_tcAgreedAt", userProfileAttributes.channel_A_tcAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_B_tcAgreedAt", userProfileAttributes.channel_B_tcAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_A_tcAgreedVer", userProfileAttributes.channel_A_tcAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "channel_B_tcAgreedVer", userProfileAttributes.channel_B_tcAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "userCompanyInput", userProfileAttributes.userCompanyInput));
-//     response = response.concat(configureUserProfileTableContents(index++, "userCountryInput", userProfileAttributes.userCountryInput));
-//     response = response.concat(configureUserProfileTableContents(index++, "ppAgreedAt", userProfileAttributes.ppAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "maAgreedAt", userProfileAttributes.maAgreedAt));
-//     response = response.concat(configureUserProfileTableContents(index++, "maAgreedVer", userProfileAttributes.maAgreedVer));
-//     response = response.concat(configureUserProfileTableContents(index++, "ppAgreedVer", userProfileAttributes.ppAgreedVer));
-
-//     document.getElementById("applicationCustomAttributeTableBody").innerHTML = response;
-// }
