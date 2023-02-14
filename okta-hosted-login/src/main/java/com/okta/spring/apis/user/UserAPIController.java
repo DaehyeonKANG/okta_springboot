@@ -16,20 +16,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/user")
 public class UserAPIController {
+    private final UserService userService = new UserService();
 
     @PostMapping("/assign")
     public ResponseEntity<String> assignChannelB(@RequestBody UserEntity entity) {
         LocalDateTime now = LocalDateTime.now();
-        System.out.println("userId: " + entity.getUserId());
-        System.out.println("userCompany: " + entity.getUserCompany());
-        System.out.println("userRegion: " + entity.getUserRegion());
-        System.out.println("tcAgreedVersion: " + entity.getTcAgreedVersion());
-        System.out.println("tcAgreedDate: " + entity.getTcAgreedDate());
-        System.out.println("ppAgreedVersion: " + entity.getPpAgreedVersion());
-        System.out.println("ppAgreedDate: " + entity.getPpAgreedDate());
-        System.out.println("maAgreedVersion: " + entity.getMaAgreedVersion());
-        System.out.println("maAgreedDate: " + entity.getMaAgreedDate());
 
-        return new ResponseEntity(null, HttpStatus.OK);
+        if(setEntityAttributes(entity.getTcAgreedDate())) {
+            entity.setTcAgreedDate(now);
+            entity.setTcAgreedExist("false");
+        }
+        if(setEntityAttributes(entity.getPpAgreedDate())) {
+            entity.setPpAgreedDate(now);
+            entity.setPpAgreedExist("false");
+        }
+        if(setEntityAttributes(entity.getTcAgreedDate())) {
+            entity.setMaAgreedDate(now);
+            entity.setMaAgreedExist("false");
+        }
+
+        return new ResponseEntity(this.userService.updateUserProfile(entity), HttpStatus.OK);
+    }
+
+    private Boolean setEntityAttributes(LocalDateTime termsAgreeDate) {
+        if(termsAgreeDate == null) {
+            return true;
+        }
+
+        return false;
     }
 }

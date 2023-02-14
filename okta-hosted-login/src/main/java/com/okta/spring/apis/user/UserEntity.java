@@ -11,8 +11,11 @@ public class UserEntity {
     private String userRegion;
     private int tcAgreedVersion;
     private LocalDateTime tcAgreedDate;
+    private String tcAgreedExist;
     private int ppAgreedVersion;
     private LocalDateTime ppAgreedDate;
+    private String ppAgreedExist;
     private int maAgreedVersion;
     private LocalDateTime maAgreedDate;
+    private String maAgreedExist;
 }

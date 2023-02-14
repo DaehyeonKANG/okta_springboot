@@ -81,6 +81,44 @@ function initRegionState(userProfileAttributes) {
     });
 }
 
+function getTermsData(userProfileAttributes) {
+    $.ajax({
+        url: "/terms/list",
+        type: "POST",
+        async: true,
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+        },
+        success: function(response) {
+            let terms = response.terms;
+            for(let i=0; i<terms.length; i++) {
+                let channelId = terms[i].channelId;
+                let countryId = terms[i].countryId;
+                let templateLink = terms[i].templateLink;
+                let templateText = terms[i].templateText;
+                let type = terms[i].type;
+                let version = terms[i].version;
+
+                if(type == "TC" && channelId == "b") {
+                    document.getElementById("view-tc-terms").addEventListener("click", function() {
+                        window.open(templateLink, "_blank");
+                    });
+                } else if (type == "PP") {
+                    document.getElementById("view-pp-terms").addEventListener("click", function() {
+                        window.open(templateLink, "_blank");
+                    });
+                } else if (type == "MA") {
+                    document.getElementById("view-ma-terms").addEventListener("click", function() {
+                        window.open(templateLink, "_blank");
+                    });
+                }
+            }
+        }
+    });
+}
+
 // configure terms agrred state.
 function initTermsState(userProfileAttributes) {
     if (!checkNullObject(userProfileAttributes.channel_B_tcAgreedAt)) {
@@ -128,16 +166,18 @@ function configureEventHandlers(userProfileAttributes) {
             alert("가입 신청이 완료되었습니다.\n다시 로그인해 주세요.");
 
             let payLoad = new Object();
-            payLoad.userId = userRegionAttribute.email;
-            payLoad.userCompany = userRegionAttribute.userCompanyInput;
-            payLoad.userRegion = userRegionAttribute.userCountryInput;
-            payLoad.tcAgreedVersion = userRegionAttribute.channel_B_tcAgreedVer;
-            payLoad.tcAgreedDate = userRegionAttribute.channel_B_tcAgreedAt;
-            payLoad.ppAgreedVersion = userRegionAttribute.ppAgreedVer;
-            payLoad.ppAgreedDate = userRegionAttribute.ppAgreedAt;
-            payLoad.maAgreedVersion = userRegionAttribute.maAgreedVer;
-            payLoad.maAgreedDate = userRegionAttribute.maAgreedAt;
-            console.log(payLoad);
+            payLoad.userId = userProfileAttributes.email;
+            payLoad.userCompany = userProfileAttributes.userCompanyInput;
+            payLoad.userRegion = userProfileAttributes.userCountryInput;
+            payLoad.tcAgreedVersion = userProfileAttributes.channel_B_tcAgreedVer;
+            payLoad.tcAgreedDate = userProfileAttributes.channel_B_tcAgreedAt;
+            payLoad.ppAgreedVersion = userProfileAttributes.ppAgreedVer;
+            payLoad.ppAgreedDate = userProfileAttributes.ppAgreedAt;
+            payLoad.maAgreedVersion = userProfileAttributes.maAgreedVer;
+            payLoad.maAgreedDate = userProfileAttributes.maAgreedAt;
+            payLoad.tcAgreedExist = "true";
+            payLoad.ppAgreedExist = "true";
+            payLoad.maAgreedExist = "true";
 
             $.ajax({
                 url: "/user/assign",
@@ -150,10 +190,9 @@ function configureEventHandlers(userProfileAttributes) {
                     xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
                 },
                 success: function(response) {
-                    console.log(response);
+                    document.getElementById("logoutForm").submit();
                 }
             });
-
             // location.href = "/updateuserprofile?email=" + document.getElementById("userEmail").value + "&country=" + document.getElementById("userRegion").value;
         }
     });
