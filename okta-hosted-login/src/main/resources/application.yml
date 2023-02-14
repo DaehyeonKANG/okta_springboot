@@ -5,6 +5,22 @@ spring:
         provider:
           okta:
             user-name-attribute: email
+  jpa:
+    database: mysql
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/okta_samsung_electronics?characterEncoding=UTF-8
+    username: root
+    password: bitek01!
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
 
 okta:
   oauth2:
