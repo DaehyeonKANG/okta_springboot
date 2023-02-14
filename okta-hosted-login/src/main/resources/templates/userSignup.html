@@ -8,6 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta id="_csrf" th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    
     <title>Channel-B Sign In</title>
 
     <link href="/custom/icons/samsung_lettermark/samsung_ci.png" rel="icon" type="image/x-icon" />
@@ -37,21 +40,25 @@
             document.getElementById("sign-up-user-profile").addEventListener("click", function() {
                 let fillState = checkDataConfig();
                 if (fillState) {
-                    alert("가입 신청이 완료되었습니다.");
+                    alert("가입 신청이 완료되었습니다.\n재 로그인이 필요합니다.");
                     location.href = "/updateuserprofile?email=" + document.getElementById("userEmail").value + "&country=" + document.getElementById("userRegion").value;
                 }
             });
 
-            let tcWindow = null;
-            document.getElementById("termsonchannelb").addEventListener("click", function() {
-                if (tcWindow == null) {
-                    tcWindow = window.open("/termsonchannelb", '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
-                } else {
-                    tcWindow.focus();
-                }
 
-                console.log(tcWindow);
+            document.getElementById("searchCompanies").addEventListener("click", function() {
+                searchCompanyName();
             });
+            // let tcWindow = null;
+            // document.getElementById("termsonchannelb").addEventListener("click", function() {
+            //     if (tcWindow == null) {
+            //         tcWindow = window.open("/termsonchannelb", '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+            //     } else {
+            //         tcWindow.focus();
+            //     }
+
+            //     console.log(tcWindow);
+            // });
         });
     </script>
 </head>
@@ -78,6 +85,19 @@
 
                                         <div class="form-group row">
                                             <input type="text" class="form-control form-control-user" id="userEmail" placeholder="이메일" readonly>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-8">
+                                                <input type="text" class="form-control form-control-user" id="userCompanyKeyword" placeholder="회사명이름">
+                                            </div>
+                                            <div class="col">
+                                                <button id="searchCompanies" type="button" class="btn btn-primary w-100">검색</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <select id="companySearchResult" class="custom-select circle-select" aria-label="user company"></select>
                                         </div>
 
                                         <div class="form-group row">

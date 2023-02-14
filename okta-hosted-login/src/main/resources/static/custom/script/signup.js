@@ -95,3 +95,29 @@ function checkDataConfig() {
 
     return true;
 }
+
+function searchCompanyName() {
+    let companyName = document.getElementById("userCompanyKeyword").value;
+    let payLoad = new Object();
+    payLoad.companyName = companyName;
+    $.ajax({
+        url: "/company/search",
+        type: "POST",
+        async: true,
+        data: JSON.stringify(payLoad),
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+        },
+        success: function(response) {
+            let companies = response.companies;
+            let companySelector = document.getElementById("companySearchResult");
+            companySelector.options.length = 0;
+
+            for (let i = 0; i < companies.length; i++) {
+                companySelector.options.add(new Option(companies[i], companies[i]));
+            }
+        }
+    });
+}

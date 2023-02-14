@@ -17,18 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/company")
 public class LocalAPIController {
-    @PostMapping("/search")
-    public ResponseEntity<String> companySearch(@RequestBody DBCompanyEntity entity) {
-        System.out.println("enter api");
+    // private final CompanyService companyService = new CompanyService();
 
-        HashMap<String, String> responseEntity = new HashMap<String, String>();
-        responseEntity.put("code", "200");
+    // @PostMapping("/search")
+    // public ResponseEntity<String> companySearch(@RequestBody CompanyInfo entity) {
+    //     this.companyService.searchCompany(entity);
 
-        // responseEntity.put("company_name_ko", responseData.getCompanyNameKo());
-        // responseEntity.put("company_name_us", responseData.getCompanyNameUs());
+    //     HashMap<String, String> responseEntity = new HashMap<String, String>();
+    //     responseEntity.put("code", "200");
 
-        return new ResponseEntity(responseEntity, HttpStatus.OK);
-    }
+    //     // responseEntity.put("company_name_ko", responseData.getCompanyNameKo());
+    //     // responseEntity.put("company_name_us", responseData.getCompanyNameUs());
+
+    //     return new ResponseEntity(responseEntity, HttpStatus.OK);
+    // }
 
     // private final DBCompanyService companyService = new DBCompanyService();
 
