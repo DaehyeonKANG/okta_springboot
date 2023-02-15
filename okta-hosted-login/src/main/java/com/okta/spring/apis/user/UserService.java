@@ -8,4 +8,8 @@ public class UserService {
     public JSONObject updateUserProfile(UserEntity entity) {
         return this.userRepository.updateUserProfile(entity);
     }
+
+    public JSONObject getAllMembersWithChannelB() {
+        return this.userRepository.getAllMembersWithChannelB();
+    }
 }

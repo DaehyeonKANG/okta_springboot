@@ -71,3 +71,19 @@ function covertDateTime(value) {
 
     return date + " " + time;
 }
+
+function getAllMembersWithChannelB() {
+    $.ajax({
+        url: "/user/channelmembers",
+        type: "POST",
+        async: true,
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+        },
+        success: function(response) {
+            console.log(response);
+        }
+    });
+}

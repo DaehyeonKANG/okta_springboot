@@ -8,6 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta id="_csrf" th:name="${_csrf.parameterName}" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
     <title>Channel-B Sign In</title>
 
     <link href="/custom/icons/samsung_lettermark/samsung_ci.png" rel="icon" type="image/x-icon" />
@@ -28,6 +31,7 @@
             let data = /*[[${informations}]]*/ null;
             configureTitle(data);
             configureUserAttribute(data);
+            getAllMembersWithChannelB();
         });
     </script>
 </head>

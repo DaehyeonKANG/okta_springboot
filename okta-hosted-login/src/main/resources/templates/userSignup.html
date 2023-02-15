@@ -29,8 +29,6 @@
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function() {
             let data = /*[[${informations}]]*/ null;
-            let companies = /*[[${companies}]]*/ null;
-
             let userProfileAttributes = data.principal.attributes;
             setUserInfo(userProfileAttributes);
             initCompanyState(userProfileAttributes);

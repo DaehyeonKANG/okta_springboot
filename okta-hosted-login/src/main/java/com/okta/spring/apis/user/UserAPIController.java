@@ -45,4 +45,9 @@ public class UserAPIController {
 
         return false;
     }
+
+    @PostMapping("/channelmembers")
+    public ResponseEntity<String> getAllMembersWithChannelB() {
+        return new ResponseEntity(this.userService.getAllMembersWithChannelB(), HttpStatus.OK);
+    }
 }

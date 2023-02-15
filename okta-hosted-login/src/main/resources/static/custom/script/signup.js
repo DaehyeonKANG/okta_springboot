@@ -167,17 +167,17 @@ function configureEventHandlers(userProfileAttributes) {
 
             let payLoad = new Object();
             payLoad.userId = userProfileAttributes.email;
-            payLoad.userCompany = userProfileAttributes.userCompanyInput;
-            payLoad.userRegion = userProfileAttributes.userCountryInput;
+            payLoad.userCompany = document.getElementById("companySearchResult").value;
+            payLoad.userRegion = document.getElementById("userRegion").value;
             payLoad.tcAgreedVersion = userProfileAttributes.channel_B_tcAgreedVer;
             payLoad.tcAgreedDate = userProfileAttributes.channel_B_tcAgreedAt;
             payLoad.ppAgreedVersion = userProfileAttributes.ppAgreedVer;
             payLoad.ppAgreedDate = userProfileAttributes.ppAgreedAt;
             payLoad.maAgreedVersion = userProfileAttributes.maAgreedVer;
             payLoad.maAgreedDate = userProfileAttributes.maAgreedAt;
-            payLoad.tcAgreedExist = "true";
-            payLoad.ppAgreedExist = "true";
-            payLoad.maAgreedExist = "true";
+            payLoad.tcAgreedExist = checkNullObject(userProfileAttributes.channel_B_tcAgreedAt) ? "false" : "true";
+            payLoad.ppAgreedExist = checkNullObject(userProfileAttributes.ppAgreedAt) ? "false" : "true";
+            payLoad.maAgreedExist = checkNullObject(userProfileAttributes.maAgreedAt) ? "false" : "true";
 
             $.ajax({
                 url: "/user/assign",
@@ -193,6 +193,7 @@ function configureEventHandlers(userProfileAttributes) {
                     document.getElementById("logoutForm").submit();
                 }
             });
+
             // location.href = "/updateuserprofile?email=" + document.getElementById("userEmail").value + "&country=" + document.getElementById("userRegion").value;
         }
     });

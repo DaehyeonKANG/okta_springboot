@@ -67,18 +67,10 @@ public class CodeFlowExampleApplication {
             return "profile";
         }
 
-        // @GetMapping("/profile")
-        // @PreAuthorize("hasAuthority('SCOPE_profile')")
-        // public ModelAndView userDetails(OAuth2AuthenticationToken authentication) {
-        //     return new ModelAndView("userProfile" , Collections.singletonMap("details", authentication.getPrincipal().getAttributes()));
-        // }
-
         @GetMapping("/signup")
         @PreAuthorize("hasAuthority('SCOPE_profile')")
         public String signup(Model model, OAuth2AuthenticationToken authentication) {
-            CompanyInfoList companies = new CompanyInfoList();
             model.addAttribute("informations", authentication);
-            model.addAttribute("companies", companies.companies);
             return "userSignup";
         }
 
