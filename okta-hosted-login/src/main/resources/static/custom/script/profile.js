@@ -9,6 +9,7 @@ function configureTitle(data) {
     let title = "환영합니다. " + userProfileAttributes.name + "님.";
     document.getElementById("userProfile-title").innerHTML = title;
 
+    console.log(userProfileAttributes);
     let assignedChannelB = userProfileAttributes.assignedChannelB;
     let assignedState = (assignedChannelB == null || assignedChannelB == undefined || assignedChannelB == "" || assignedChannelB == false) ? false : true;
     let description = "";
@@ -16,6 +17,10 @@ function configureTitle(data) {
         description = userProfileAttributes.name + "님은 현재 <span class='red-highlight'>[승인]</span> 상태입니다.";
     } else {
         description = userProfileAttributes.name + "님은 현재 <span class='red-highlight'>[승인 대기]</span> 상태입니다.<br/>관리자 승인 후 정상적으로 시스템을 사용하실 수 있습니다.";
+    }
+
+    if(userProfileAttributes.isCompanyVerified == null || userProfileAttributes.isCompanyVerified == undefined || userProfileAttributes.isCompanyVerified == "" || userProfileAttributes.isCompanyVerified == false) {
+        description = description.concat("<br/>회사 정보가 <span class='red-highlight'>미인증</span> 상태입니다. 관리자에게 확인하세요.");
     }
 
     document.getElementById("userProfile-description").innerHTML = description;
@@ -70,20 +75,4 @@ function covertDateTime(value) {
     const time = kstEnterDate.toTimeString().split(' ')[0];
 
     return date + " " + time;
-}
-
-function getAllMembersWithChannelB() {
-    $.ajax({
-        url: "/user/channelmembers",
-        type: "POST",
-        async: true,
-        dataType: "json",
-        contentType: "application/json",
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-        },
-        success: function(response) {
-            console.log(response);
-        }
-    });
 }

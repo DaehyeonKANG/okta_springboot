@@ -11,7 +11,7 @@
     <meta id="_csrf" th:name="${_csrf.parameterName}" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
-    <title>Channel-B Sign In</title>
+    <title>Channel-B User Profile</title>
 
     <link href="/custom/icons/samsung_lettermark/samsung_ci.png" rel="icon" type="image/x-icon" />
 
@@ -31,7 +31,13 @@
             let data = /*[[${informations}]]*/ null;
             configureTitle(data);
             configureUserAttribute(data);
-            getAllMembersWithChannelB();
+            
+            let userGroups = data.principal.claims.groups;
+            for(let i = 0; i < userGroups.length; i++) {
+                if(userGroups[i] == "Channel B Admins") {
+                    document.getElementById("management-members").classList.remove("hide");
+                }
+            }
         });
     </script>
 </head>
@@ -52,6 +58,13 @@
                 <a class="nav-link" href="/profile">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Profile</span>
+                </a>
+            </li>
+
+            <li id="management-members" class="nav-item hide">
+                <a class="nav-link" href="/members">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>채널 B 멤버</span>
                 </a>
             </li>
 

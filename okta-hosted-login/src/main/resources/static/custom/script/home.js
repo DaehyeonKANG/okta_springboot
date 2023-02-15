@@ -10,9 +10,6 @@ function checkObject(data) {
             let welcomeMsg = "";
 
             let userInfoFlag = ((userProfileAttributes.userCompanyInput==null||userProfileAttributes.userCompanyInput==undefined||userProfileAttributes.userCompanyInput=="") || (userProfileAttributes.name==null||userProfileAttributes.name==undefined||userProfileAttributes.name=="")) ? false : true;
-            console.log(userProfileAttributes.userCompanyInput);
-            console.log(userProfileAttributes.name);
-
             if(userInfoFlag) {
                 welcomeMsg = welcomeMsg.concat("[").concat(userProfileAttributes.userCompanyInput).concat("] ").concat(userProfileAttributes.name).concat("님은 ");
             }

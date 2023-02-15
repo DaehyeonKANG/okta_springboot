@@ -3,6 +3,8 @@ package com.okta.spring.apis.user;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -56,13 +58,28 @@ public class UserRepository {
         return sendPostRequest(apiUrl, payLoad);
     }
 
-    public JSONObject getAllMembersWithChannelB() {
+    public List<JSONObject> getAllMembersWithChannelB() {
         String apiUrl = "https://samsung-poc.workflows.oktapreview.com/api/flo/cc7f01cf01d945daebbd78fef5ee077a/invoke?clientToken=e2a17a78293a7c96f3eb5c33ec5cf40a5e76bf03818128e7300a0913fae731a3";
         Map<String, Object> payLoad = new HashMap<>();
         Map<String, Object> query = new HashMap<>();
         payLoad.put("query", query);
 
-        return sendPostRequest(apiUrl, payLoad);
+        List<JSONObject> groupMemberList = new ArrayList<JSONObject>();
+
+        JSONObject groupMembers = sendPostRequest(apiUrl, payLoad);
+        for(Object groupMember : (JSONArray)groupMembers.get("users")) {
+            JSONObject groupMemberJson = (JSONObject) groupMember;
+            String groupMemberEmail = (String) groupMemberJson.get("Email");
+
+            String subApiUrl = "https://samsung-poc.workflows.oktapreview.com/api/flo/7f0d6a3bd62eb7c2472f2f73dd3ad290/invoke?clientToken=46b3452cc4588130ad86ccad7f3c130d5e7536ea6fe4c258f5207efd41355e26";
+            Map<String, Object> subPayLoad = new HashMap<>();
+            Map<String, Object> subQuery = new HashMap<>();
+            subQuery.put("user_email", groupMemberEmail);
+            subPayLoad.put("query", subQuery);
+            groupMemberList.add(sendPostRequest(subApiUrl, subPayLoad));
+        }
+        
+        return groupMemberList;
     }
 
     public JSONObject sendPostRequest(String apiUrl, Map<String, Object> payLoad) {

@@ -83,5 +83,12 @@ public class CodeFlowExampleApplication {
         public String termsonchannelb() {
             return "termsonchannelb";
         }
+
+        @GetMapping("/members")
+        @PreAuthorize("hasAuthority('SCOPE_profile')")
+        public String membersWithChannelB(Model model, OAuth2AuthenticationToken authentication) {
+            model.addAttribute("informations", authentication);
+            return "membersWithChannelB";
+        }
     }
 }

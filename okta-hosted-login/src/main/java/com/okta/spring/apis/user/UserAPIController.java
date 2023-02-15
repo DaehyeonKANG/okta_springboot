@@ -22,18 +22,19 @@ public class UserAPIController {
     public ResponseEntity<String> assignChannelB(@RequestBody UserEntity entity) {
         LocalDateTime now = LocalDateTime.now();
 
-        if(setEntityAttributes(entity.getTcAgreedDate())) {
+        // if(setEntityAttributes(entity.getTcAgreedDate())) {
             entity.setTcAgreedDate(now);
             entity.setTcAgreedExist("false");
-        }
-        if(setEntityAttributes(entity.getPpAgreedDate())) {
+        // }
+        // if(setEntityAttributes(entity.getPpAgreedDate())) {
             entity.setPpAgreedDate(now);
             entity.setPpAgreedExist("false");
-        }
-        if(setEntityAttributes(entity.getTcAgreedDate())) {
+        // }
+        // if(setEntityAttributes(entity.getTcAgreedDate())) {
             entity.setMaAgreedDate(now);
             entity.setMaAgreedExist("false");
-        }
+        // }
+
 
         return new ResponseEntity(this.userService.updateUserProfile(entity), HttpStatus.OK);
     }
