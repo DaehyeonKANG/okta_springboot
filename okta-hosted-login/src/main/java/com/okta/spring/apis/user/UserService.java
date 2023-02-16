@@ -10,7 +10,7 @@ public class UserService {
         return this.userRepository.updateUserProfile(entity);
     }
 
-    public List<JSONObject> getAllMembersWithChannelB() {
+    public JSONObject getAllMembersWithChannelB() {
         return this.userRepository.getAllMembersWithChannelB();
     }
 }

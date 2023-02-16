@@ -3,28 +3,23 @@ package com.okta.spring.apis.user;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class UserRepository {
     public JSONObject updateUserProfile(UserEntity entity) {
         String apiUrl = "https://samsung-poc.workflows.oktapreview.com/api/flo/36588068ca31ee4fc7f1c38574e7d1fd/invoke?clientToken=b03f63d784806f54b19c1840d163088155da92316402c93e7cd70217c53250f5";
-
-        // RestTemplate restTemplate = new RestTemplate();
-        // HttpHeaders headers = new HttpHeaders();
-        // headers.setContentType(MediaType.APPLICATION_JSON);
-        // headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
         Map<String, Object> payLoad = new HashMap<>();
         Map<String, Object> query = new HashMap<>();
@@ -42,47 +37,26 @@ public class UserRepository {
         query.put("maAgreedExist", entity.getMaAgreedExist());
         payLoad.put("query", query);
 
-        // HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(payLoad, headers);
-        // ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, httpEntity, String.class);
-
-        // JSONParser parser = new JSONParser();
-        // JSONObject responseObject = new JSONObject();
-        // try {
-        //     responseObject = (JSONObject) parser.parse(response.getBody());
-        // } catch (ParseException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
-
-        // return responseObject;
         return sendPostRequest(apiUrl, payLoad);
     }
 
-    public List<JSONObject> getAllMembersWithChannelB() {
-        String apiUrl = "https://samsung-poc.workflows.oktapreview.com/api/flo/cc7f01cf01d945daebbd78fef5ee077a/invoke?clientToken=e2a17a78293a7c96f3eb5c33ec5cf40a5e76bf03818128e7300a0913fae731a3";
-        Map<String, Object> payLoad = new HashMap<>();
-        Map<String, Object> query = new HashMap<>();
-        payLoad.put("query", query);
+    public JSONObject getAllMembersWithChannelB() {
+        String apiUrl = "https://okta-express-api-poc-railway-production.up.railway.app/api/okta/users";
+        UriComponents uri = UriComponentsBuilder.fromHttpUrl(apiUrl).build(false);
 
-        List<JSONObject> groupMemberList = new ArrayList<JSONObject>();
+        HttpHeaders header = new HttpHeaders();
+        header.add("Authorization", "SSWS qdM4nmdCGssl7eujc4QptKKPbrYtf5GN");
 
-        JSONObject groupMembers = sendPostRequest(apiUrl, payLoad);
-        for(Object groupMember : (JSONArray)groupMembers.get("users")) {
-            JSONObject groupMemberJson = (JSONObject) groupMember;
-            String groupMemberEmail = (String) groupMemberJson.get("Email");
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> entity = new HttpEntity<String>(header);
+        ResponseEntity<String> response = restTemplate.exchange(uri.toUriString(), HttpMethod.GET, entity, String.class);
 
-            String subApiUrl = "https://samsung-poc.workflows.oktapreview.com/api/flo/7f0d6a3bd62eb7c2472f2f73dd3ad290/invoke?clientToken=46b3452cc4588130ad86ccad7f3c130d5e7536ea6fe4c258f5207efd41355e26";
-            Map<String, Object> subPayLoad = new HashMap<>();
-            Map<String, Object> subQuery = new HashMap<>();
-            subQuery.put("user_email", groupMemberEmail);
-            subPayLoad.put("query", subQuery);
-            groupMemberList.add(sendPostRequest(subApiUrl, subPayLoad));
-        }
-        
-        return groupMemberList;
+        String responseBody = response.getBody();
+
+        return conveertStringToJSONObject("{\"users\":" + response.getBody() + "}");
     }
 
-    public JSONObject sendPostRequest(String apiUrl, Map<String, Object> payLoad) {
+    private JSONObject sendPostRequest(String apiUrl, Map<String, Object> payLoad) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -91,15 +65,19 @@ public class UserRepository {
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(payLoad, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, httpEntity, String.class);
 
+        return conveertStringToJSONObject(response.getBody());
+    }
+
+    private JSONObject conveertStringToJSONObject(String request) {
         JSONParser parser = new JSONParser();
-        JSONObject responseObject = new JSONObject();
+        JSONObject response = new JSONObject();
         try {
-            responseObject = (JSONObject) parser.parse(response.getBody());
+            response = (JSONObject) parser.parse(request);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        return responseObject;
+        return response;
     }
 }
