@@ -3,6 +3,11 @@
     color: red;
 }
 
+.blue-highlight {
+    font-weight: bold;
+    color: blue;
+}
+
 .hide {
     display: none;
 }

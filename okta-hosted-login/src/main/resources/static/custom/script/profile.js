@@ -21,6 +21,8 @@ function configureTitle(data) {
 
     if(userProfileAttributes.isCompanyVerified == null || userProfileAttributes.isCompanyVerified == undefined || userProfileAttributes.isCompanyVerified == "" || userProfileAttributes.isCompanyVerified == false) {
         description = description.concat("<br/>회사 정보가 <span class='red-highlight'>미인증</span> 상태입니다. 관리자에게 확인하세요.");
+    } else {
+        description = description.concat("<br/>회사 정보가 <span class='blue-highlight'>인증</span> 상태입니다.");
     }
 
     document.getElementById("userProfile-description").innerHTML = description;
@@ -36,6 +38,7 @@ function configureUserAttribute(data) {
     response = response.concat(configureUserProfileTableContents(index++, "성별", userProfileAttributes.gender));
     response = response.concat(configureUserProfileTableContents(index++, "생일", userProfileAttributes.birthdate));
     response = response.concat(configureUserProfileTableContents(index++, "회사", userProfileAttributes.userCompanyInput));
+    response = response.concat(configureUserProfileTableContents(index++, "회사명 인증", (userProfileAttributes.isCompanyVerified?"인증":"미인증")));
     response = response.concat(configureUserProfileTableContents(index++, "국가", userProfileAttributes.userCountryInput));
 
     document.getElementById("userProfileAttributeTableBody").innerHTML = response;

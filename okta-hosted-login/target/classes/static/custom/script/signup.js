@@ -7,12 +7,14 @@ function setUserInfo(userProfileAttributes) {
 }
 
 function optionSelect(userOption, elementId) {
-    if (userOption != null && userOption != undefined) {
-        let element = document.getElementById(elementId).options;
-        for (let i = 0; i < element.length; i++) {
-            if (element[i].value == userOption) {
-                element[i].selected = true;
-            }
+    if(checkNullObject(userOption) || userOption == "undefined") {
+        return false;
+    }
+
+    let element = document.getElementById(elementId).options;
+    for (let i = 0; i < element.length; i++) {
+        if (element[i].value == userOption) {
+            element[i].selected = true;
         }
     }
 }
@@ -20,6 +22,9 @@ function optionSelect(userOption, elementId) {
 function initCompanyState(userProfileAttributes) {
     let userCompanyValue = userProfileAttributes.userCompanyInput;
     document.getElementById("userCompanyKeyword").value = userCompanyValue;
+    if (checkNullObject(userCompanyValue) || userCompanyValue == "undefined" || userCompanyValue.trim() == "") {
+        return false;
+    }
 
     searchCompanyName(userCompanyValue);
 }
@@ -34,10 +39,10 @@ function searchCompanyName(companyKeyword) {
         data: JSON.stringify(payLoad),
         dataType: "json",
         contentType: "application/json",
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
         },
-        success: function(response) {
+        success: function (response) {
             let companies = response.companies;
             let companySelector = document.getElementById("companySearchResult");
             companySelector.options.length = 0;
@@ -63,10 +68,10 @@ function initRegionState(userProfileAttributes) {
         data: JSON.stringify(payLoad),
         dataType: "json",
         contentType: "application/json",
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
         },
-        success: function(response) {
+        success: function (response) {
             let regions = response.regions;
             let regionSelector = document.getElementById("userRegion");
             regionSelector.options.length = 0;
@@ -88,12 +93,12 @@ function getTermsData(userProfileAttributes) {
         async: true,
         dataType: "json",
         contentType: "application/json",
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
         },
-        success: function(response) {
+        success: function (response) {
             let terms = response.terms;
-            for(let i=0; i<terms.length; i++) {
+            for (let i = 0; i < terms.length; i++) {
                 let channelId = terms[i].channelId;
                 let countryId = terms[i].countryId;
                 let templateLink = terms[i].templateLink;
@@ -101,16 +106,16 @@ function getTermsData(userProfileAttributes) {
                 let type = terms[i].type;
                 let version = terms[i].version;
 
-                if(type == "TC" && channelId == "b") {
-                    document.getElementById("view-tc-terms").addEventListener("click", function() {
+                if (type == "TC" && channelId == "b") {
+                    document.getElementById("view-tc-terms").addEventListener("click", function () {
                         window.open(templateLink, "_blank");
                     });
                 } else if (type == "PP") {
-                    document.getElementById("view-pp-terms").addEventListener("click", function() {
+                    document.getElementById("view-pp-terms").addEventListener("click", function () {
                         window.open(templateLink, "_blank");
                     });
                 } else if (type == "MA") {
-                    document.getElementById("view-ma-terms").addEventListener("click", function() {
+                    document.getElementById("view-ma-terms").addEventListener("click", function () {
                         window.open(templateLink, "_blank");
                     });
                 }
@@ -137,11 +142,17 @@ function setTermsState(object, domName) {
 
 function configureEventHandlers(userProfileAttributes) {
     let searchCompanyBtn = document.getElementById("searchCompanies");
-    searchCompanyBtn.addEventListener("click", function() {
-        searchCompanyName(document.getElementById("userCompanyKeyword").value);
+    searchCompanyBtn.addEventListener("click", function () {
+        let companyName = document.getElementById("userCompanyKeyword").value;
+        if (companyName.trim() == "") {
+            alert("영문 회사명을 입력해주세요.");
+            return false;
+        }
+
+        searchCompanyName(companyName);
     });
 
-    document.getElementById("userCompanyKeyword").addEventListener("keyup", function(event) {
+    document.getElementById("userCompanyKeyword").addEventListener("keyup", function (event) {
         if (event.keyCode == 13) {
             searchCompanyBtn.click();
         }
@@ -152,7 +163,7 @@ function configureEventHandlers(userProfileAttributes) {
 
     let ppObj = document.getElementById("agreePrivacyPolicy");
     let userRegion = document.getElementById("userRegion");
-    userRegion.addEventListener("change", function() {
+    userRegion.addEventListener("change", function () {
         if (userRegionAttribute == userRegion.value && !ppAgreedState) {
             ppObj.checked = true;
         } else {
@@ -160,7 +171,7 @@ function configureEventHandlers(userProfileAttributes) {
         }
     });
 
-    document.getElementById("sign-up-user-profile").addEventListener("click", function() {
+    document.getElementById("sign-up-user-profile").addEventListener("click", function () {
         let fillState = checkDataConfig();
         if (fillState) {
             alert("가입 신청이 완료되었습니다.\n다시 로그인해 주세요.");
@@ -186,10 +197,10 @@ function configureEventHandlers(userProfileAttributes) {
                 data: JSON.stringify(payLoad),
                 dataType: "json",
                 contentType: "application/json",
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
                 },
-                success: function(response) {
+                success: function (response) {
                     document.getElementById("logoutForm").submit();
                 }
             });
